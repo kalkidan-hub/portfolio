@@ -1,0 +1,18 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g2" x1="80" y1="80" x2="1120" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2f2419"/>
+      <stop offset="0.55" stop-color="#6c5339"/>
+      <stop offset="1" stop-color="#201915"/>
+    </linearGradient>
+    <radialGradient id="r2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(860 240) rotate(90) scale(260 460)">
+      <stop stop-color="#f0d9a9" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#f0d9a9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#g2)"/>
+  <rect width="1200" height="720" fill="url(#r2)"/>
+  <path d="M120 130H1080V590H120V130Z" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.05)"/>
+  <path d="M280 200C370 150 450 150 520 220C580 280 670 300 740 260C820 215 920 210 990 260" stroke="#e6cfa4" stroke-opacity="0.12" stroke-width="3"/>
+  <text x="600" y="360" text-anchor="middle" fill="#d9bf91" fill-opacity="0.8" font-size="22" letter-spacing="0.5em" font-family="Georgia, 'Times New Roman', serif">PROJECT IMAGE</text>
+</svg>

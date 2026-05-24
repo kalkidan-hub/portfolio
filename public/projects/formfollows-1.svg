@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f2ea"/>
+      <stop offset="100%" stop-color="#e4d0bc"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3d4f56"/>
+      <stop offset="100%" stop-color="#a66d45"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="36" fill="url(#bg)"/>
+  <rect x="66" y="66" width="1068" height="543" rx="26" fill="#fdfaf6" stroke="#8c7358" stroke-opacity="0.15"/>
+  <path d="M170 512L320 392L418 448L548 300L706 372L865 210L1015 250" stroke="url(#line)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M220 180h300" stroke="#2f3f44" stroke-width="12" stroke-linecap="round" opacity="0.75"/>
+  <path d="M220 220h220" stroke="#2f3f44" stroke-width="12" stroke-linecap="round" opacity="0.35"/>
+  <circle cx="540" cy="340" r="140" fill="#d8b79d" opacity="0.35"/>
+  <circle cx="540" cy="340" r="56" fill="#2f3f44" opacity="0.82"/>
+  <text x="166" y="160" fill="#2f3f44" font-family="Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="6">FORM FOLLOWS</text>
+  <text x="166" y="606" fill="#8b6f54" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">EDITORIAL SCHEDULING</text>
+</svg>

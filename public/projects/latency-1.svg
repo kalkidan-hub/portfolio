@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4efe8"/>
+      <stop offset="100%" stop-color="#d9dde6"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#213042"/>
+      <stop offset="100%" stop-color="#6f86a2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="36" fill="url(#bg)"/>
+  <rect x="52" y="52" width="1096" height="571" rx="28" fill="#f9fbfd" stroke="#6f8094" stroke-opacity="0.16"/>
+  <path d="M100 460C173 370 248 332 316 355c66 22 108 97 176 121 103 36 178-46 252-87 93-50 182-29 356 82" stroke="url(#wave)" stroke-width="14" stroke-linecap="round"/>
+  <path d="M100 208h250" stroke="#213042" stroke-width="12" stroke-linecap="round" opacity="0.74"/>
+  <path d="M100 246h170" stroke="#213042" stroke-width="12" stroke-linecap="round" opacity="0.34"/>
+  <circle cx="848" cy="286" r="150" fill="#c0ccdb" opacity="0.44"/>
+  <circle cx="848" cy="286" r="52" fill="#213042" opacity="0.9"/>
+  <text x="100" y="160" fill="#213042" font-family="Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="6">THE LEGIBILITY OF LATENCY</text>
+  <text x="100" y="606" fill="#64748b" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">SYSTEM FEEDBACK STUDY</text>
+</svg>

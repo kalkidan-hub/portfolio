@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6efe4"/>
+      <stop offset="100%" stop-color="#d8c1a0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#aa613d"/>
+      <stop offset="100%" stop-color="#2d241f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="36" fill="url(#bg)"/>
+  <rect x="58" y="58" width="1084" height="559" rx="28" fill="#f8f3eb" stroke="#7f684f" stroke-opacity="0.18"/>
+  <path d="M115 465C237 313 342 268 459 289c119 22 190 119 320 129 143 11 250-57 315-179" stroke="url(#accent)" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="336" cy="300" r="112" fill="#fffaf3" stroke="#7f684f" stroke-opacity="0.18"/>
+  <circle cx="336" cy="300" r="52" fill="#2d241f" opacity="0.92"/>
+  <circle cx="862" cy="268" r="156" fill="#e3d3c0" opacity="0.56"/>
+  <path d="M640 156h270" stroke="#2d241f" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+  <path d="M640 192h210" stroke="#2d241f" stroke-width="10" stroke-linecap="round" opacity="0.4"/>
+  <text x="112" y="168" fill="#2d241f" font-family="Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="8">MERIDIAN</text>
+  <text x="112" y="226" fill="#705844" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">NAVIGATION SYSTEM</text>
+</svg>

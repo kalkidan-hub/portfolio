@@ -1,4 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import {
+  SiFastapi,
+  SiFramer,
+  SiGooglemaps,
+  SiMongodb,
+  SiPostgresql,
+  SiPytorch,
+  SiReact,
+  SiRedis,
+  SiTypescript,
+} from 'react-icons/si'
+import { FiLink } from 'react-icons/fi'
+import type { IconType } from 'react-icons'
 
 type Slide = {
   src: string
@@ -7,79 +20,90 @@ type Slide = {
 
 type Tech = {
   name: string
-  icon: 'react' | 'typescript' | 'motion' | 'postgres' | 'redis'
+  icon:
+    | 'react'
+    | 'typescript'
+    | 'motion'
+    | 'postgres'
+    | 'redis'
+    | 'fastapi'
+    | 'mongodb'
+    | 'googlemaps'
+    | 'pytorch'
 }
 
 type SelectedWorkShowcaseProps = {
   title: string
   subtitle: string
   year: string
+  link?: string
   description: readonly string[]
   slides: readonly Slide[]
   techStack: readonly Tech[]
 }
 
-function TechIcon({ icon }: { icon: Tech['icon'] }) {
-  const common = 'h-3.5 w-3.5 shrink-0 stroke-current fill-none stroke-[1.8]'
+const techIconComponents: Record<Tech['icon'], IconType> = {
+  react: SiReact,
+  typescript: SiTypescript,
+  motion: SiFramer,
+  postgres: SiPostgresql,
+  redis: SiRedis,
+  fastapi: SiFastapi,
+  mongodb: SiMongodb,
+  googlemaps: SiGooglemaps,
+  pytorch: SiPytorch,
+}
 
-  if (icon === 'react') {
-    return (
-      <svg viewBox="0 0 24 24" className={common} aria-hidden="true">
-        <ellipse cx="12" cy="12" rx="9" ry="3.5" />
-        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)" />
-        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-60 12 12)" />
-        <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
-      </svg>
-    )
-  }
+const techIconColors: Record<Tech['icon'], string> = {
+  react: '#61DAFB',
+  typescript: '#3178c6',
+  motion: '#7C3AED',
+  postgres: '#336791',
+  redis: '#DC382D',
+  fastapi: '#009688',
+  mongodb: '#47A248',
+  googlemaps: '#4285F4',
+  pytorch: '#EE4C2C',
+}
 
-  if (icon === 'typescript') {
-    return (
-      <svg viewBox="0 0 24 24" className={common} aria-hidden="true">
-        <path d="M4 5.5h16v13H4z" />
-        <path d="M8 9h8" />
-        <path d="M9 11.5l2 2-2 2" />
-      </svg>
-    )
-  }
-
-  if (icon === 'motion') {
-    return (
-      <svg viewBox="0 0 24 24" className={common} aria-hidden="true">
-        <path d="M4 12h6" />
-        <path d="M10 8l4 4-4 4" />
-        <path d="M14 12h6" />
-      </svg>
-    )
-  }
-
-  if (icon === 'postgres') {
-    return (
-      <svg viewBox="0 0 24 24" className={common} aria-hidden="true">
-        <path d="M6 7.5c2-2 10-2 12 0v9c-2 2-10 2-12 0z" />
-        <path d="M6 11.5c2 1.5 10 1.5 12 0" />
-      </svg>
-    )
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" className={common} aria-hidden="true">
-      <rect x="5" y="5" width="14" height="14" rx="3" />
-      <path d="M8 12h8" />
-      <path d="M12 8v8" />
-    </svg>
-  )
+function isVideoSlide(src: string) {
+  return /\.(mp4|webm|ogg)(\?.*)?$/i.test(src)
 }
 
 export function SelectedWorkShowcase({
   title,
   subtitle,
   year,
+  link,
   description,
   slides,
   techStack,
 }: SelectedWorkShowcaseProps) {
   const [activeSlide, setActiveSlide] = useState(0)
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({})
+
+  function parseInlineMarkdown(text: string) {
+    const nodes: React.ReactNode[] = []
+    let lastIndex = 0
+    const regex = /(\*\*([^*]+)\*\*|\*([^*]+)\*)/g
+    let match: RegExpExecArray | null
+
+    while ((match = regex.exec(text)) !== null) {
+      const idx = match.index
+      if (idx > lastIndex) nodes.push(text.slice(lastIndex, idx))
+
+      if (match[2]) {
+        nodes.push(<strong key={idx}>{match[2]}</strong>)
+      } else if (match[3]) {
+        nodes.push(<em key={idx}>{match[3]}</em>)
+      }
+
+      lastIndex = regex.lastIndex
+    }
+
+    if (lastIndex < text.length) nodes.push(text.slice(lastIndex))
+    return nodes
+  }
 
   const goToPrevious = () => {
     setActiveSlide((current) => (current - 1 + slides.length) % slides.length)
@@ -89,13 +113,47 @@ export function SelectedWorkShowcase({
     setActiveSlide((current) => (current + 1) % slides.length)
   }
 
+  useEffect(() => {
+    const activeSlideData = slides[activeSlide]
+
+    for (const slide of slides) {
+      if (!isVideoSlide(slide.src)) continue
+
+      const video = videoRefs.current[slide.src]
+      if (!video) continue
+
+      if (slide.src === activeSlideData?.src) {
+        video.currentTime = 0
+        void video.play().catch(() => {
+          // Autoplay can still be blocked by browser policy; controls remain available.
+        })
+      } else {
+        video.pause()
+      }
+    }
+  }, [activeSlide, slides])
+
   return (
     <section className="selected-work">
       <div className="selected-work__topline" />
 
       <div className="selected-work__header">
         <div>
-          <h2 className="selected-work__title">{title}</h2>
+          <h2 className="selected-work__title">
+            <span>{title}</span>
+            {link ? (
+              <a
+                className="selected-work__title-link"
+                href={link}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open ${title} in a new tab`}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <FiLink size={16} aria-hidden />
+              </a>
+            ) : null}
+          </h2>
           <p className="selected-work__subtitle">{subtitle}</p>
         </div>
 
@@ -107,14 +165,38 @@ export function SelectedWorkShowcase({
           ‹
         </button>
 
-        <div className="selected-work__frame" aria-label="Project image slideshow">
+        <div
+          className="selected-work__frame"
+          aria-label="Project image slideshow"
+          onClickCapture={(event) => event.stopPropagation()}
+        >
           {slides.map((slide, index) => (
-            <img
-              key={slide.src}
-              src={slide.src}
-              alt={slide.alt}
-              className={`selected-work__slide ${index === activeSlide ? 'is-active' : ''}`}
-            />
+            isVideoSlide(slide.src) ? (
+              <video
+                key={slide.src}
+                className={`selected-work__slide video-slide ${index === activeSlide ? 'is-active' : ''}`}
+                ref={(node) => {
+                  videoRefs.current[slide.src] = node
+                }}
+                controls
+                playsInline
+                muted
+                loop
+                autoPlay
+                preload="metadata"
+                aria-label={slide.alt}
+              >
+                <source src={slide.src} type="video/mp4" />
+                {slide.alt}
+              </video>
+            ) : (
+              <img
+                key={slide.src}
+                src={slide.src}
+                alt={slide.alt}
+                className={`selected-work__slide ${index === activeSlide ? 'is-active' : ''}`}
+              />
+            )
           ))}
 
           <div className="selected-work__slide-label">
@@ -129,17 +211,21 @@ export function SelectedWorkShowcase({
 
       <div className="selected-work__body">
         {description.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
+          <p key={paragraph}>{parseInlineMarkdown(paragraph)}</p>
         ))}
       </div>
 
       <div className="selected-work__stack" aria-label="Technology stack">
-        {techStack.map((tech) => (
-          <span key={tech.name} className="selected-work__tech">
-            <TechIcon icon={tech.icon} />
-            <span>{tech.name}</span>
-          </span>
-        ))}
+        {techStack.map((tech) => {
+          const Icon = techIconComponents[tech.icon]
+
+          return (
+            <span key={tech.name} className="selected-work__tech">
+              <Icon size={14} aria-hidden style={{ color: techIconColors[tech.icon] }} />
+              <span>{tech.name}</span>
+            </span>
+          )
+        })}
       </div>
     </section>
   )

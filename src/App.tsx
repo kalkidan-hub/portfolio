@@ -44,19 +44,19 @@ const selectedWorks = [
     ],
   },
   {
-    title: 'Form Follows',
-    subtitle: 'Editorial scheduling for flexible publishing teams',
+    title: 'TransitTrack',
+    subtitle: 'AI-driven transit optimization solution for high-density urban environments.',
     year: '2024',
+    link: 'https://github.com/Transit-Track',
     description: [
-      'Form Follows organizes publishing calendars, review notes, and asset handoffs into one sequencing layer for small teams with many moving parts.',
-      'The visual model borrows from print layouts: restrained hierarchy, dense metadata, and a rhythm that makes deadlines feel visible instead of abstract.',
+      '**Designed and engineered** the **backend infrastructure** for TransitTrack, a smart transit platform engineered to **optimize public transportation** in high-density metropolitan areas like Addis Ababa. The system architecture processes real-time telemetry from transit vehicles, manages concurrent digital ticketing/queuing operations, and interfaces with an LSTM-based machine learning pipeline to deliver **demand-based route optimization** and **precise arrival predictions.**',
     ],
-    slides: [{ src: '/projects/formfollows-1.svg', alt: 'Form Follows concept image' }],
+    slides: [{ src: '/projects/transittrack.mp4', alt: 'TransitTrack app showcase' }],
     techStack: [
-      { name: 'React', icon: 'react' as const },
-      { name: 'TypeScript', icon: 'typescript' as const },
-      { name: 'Motion', icon: 'motion' as const },
-      { name: 'Redis', icon: 'redis' as const },
+      { name: 'FastAPI', icon: 'fastapi' as const },
+      { name: 'MongoDB', icon: 'mongodb' as const },
+      { name: 'Google Maps API', icon: 'googlemaps' as const },
+      { name: 'PyTorch', icon: 'pytorch' as const },
     ],
   },
   {
@@ -116,6 +116,10 @@ function App() {
 
   const recommendationStartIndex = 3 + selectedWorks.length
   const totalPages = recommendationStartIndex + recommendations.length
+  const activeWork =
+    pageIndex >= 3 && pageIndex < recommendationStartIndex
+      ? (selectedWorks[pageIndex - 3] as (typeof selectedWorks)[number] & { link?: string })
+      : undefined
   const currentView =
     pageIndex === 0
       ? 'cover'
@@ -251,6 +255,8 @@ function App() {
                 nextLabel="Next"
                 onPrevious={goToPreviousPage}
                 onNext={goToNextPage}
+                onBrandClick={() => setPageIndex(0)}
+                onTitleClick={() => setPageIndex(1)}
                 body={(
                   <>
                     <button
@@ -272,10 +278,17 @@ function App() {
                                 {selectedWorks.map((work, index) => (
                                   <li key={work.title} className="toc-item">
                                     <button
-                                      className="toc-link"
+                                      className={work.title === 'TransitTrack' ? 'toc-link toc-link--with-media' : 'toc-link'}
                                       onClick={() => setPageIndex(index + 3)}
                                       aria-label={`Open ${work.title}`}
                                     >
+                                      {work.title === 'TransitTrack' && (
+                                        <img
+                                          src="/projects/transittrack_logo.png"
+                                          alt="TransitTrack logo"
+                                          className="toc-thumb"
+                                        />
+                                      )}
                                       <span className="title">{work.title}</span>
                                       <span className="page">{index + 1}</span>
                                     </button>
@@ -316,6 +329,8 @@ function App() {
                     nextLabel="Next"
                     onPrevious={goToPreviousPage}
                     onNext={goToNextPage}
+                    onBrandClick={() => setPageIndex(0)}
+                    onTitleClick={() => setPageIndex(1)}
                     body={(
                       <div className="intro-page">
                         <div className="intro-hero">
@@ -353,6 +368,8 @@ function App() {
                     nextLabel="Next"
                     onPrevious={goToPreviousPage}
                     onNext={goToNextPage}
+                    onBrandClick={() => setPageIndex(0)}
+                    onTitleClick={() => setPageIndex(1)}
                     body={(
                       <section className="recommendation-card" aria-label="Recommendation quote">
                         <div className="recommendation-card__counter">
@@ -388,16 +405,19 @@ function App() {
                 previousLabel="Prev"
                 nextLabel="Next"
                 onPrevious={goToPreviousPage}
-                onNext={goToNextPage}
+                        onNext={goToNextPage}
+                        onBrandClick={() => setPageIndex(0)}
+                        onTitleClick={() => setPageIndex(1)}
                 body={(
                     <SelectedWorkShowcase
-                    title={selectedWorks[pageIndex - 3].title}
-                    subtitle={selectedWorks[pageIndex - 3].subtitle}
-                    year={selectedWorks[pageIndex - 3].year}
-                    description={selectedWorks[pageIndex - 3].description}
-                    slides={selectedWorks[pageIndex - 3].slides}
-                    techStack={selectedWorks[pageIndex - 3].techStack}
-                   />
+                      title={activeWork?.title ?? ''}
+                      subtitle={activeWork?.subtitle ?? ''}
+                      year={activeWork?.year ?? ''}
+                      link={activeWork?.link}
+                      description={activeWork?.description ?? []}
+                      slides={activeWork?.slides ?? []}
+                      techStack={activeWork?.techStack ?? []}
+                    />
                 )}
               />
             )}

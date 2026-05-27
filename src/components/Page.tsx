@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, KeyboardEvent } from 'react'
 
 type PageProps = {
   titleBool: boolean
@@ -10,6 +10,8 @@ type PageProps = {
   nextLabel?: string
   onPrevious?: () => void
   onNext?: () => void
+  onBrandClick?: () => void
+  onTitleClick?: () => void
   className?: string
 }
 
@@ -23,13 +25,52 @@ export function Page({
   nextLabel = 'Next',
   onPrevious,
   onNext,
+  onBrandClick,
+  onTitleClick,
   className = '',
 }: PageProps) {
+  const handleKeyActivate = (fn?: () => void) => (e: KeyboardEvent) => {
+    if (!fn) return
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      fn()
+    }
+  }
+
   return (
     <article className={`book-page page ${titleBool ? 'page--content' : 'page--cover'} ${className}`}>
       <header className="page-header">
-        <div className="page-header-brand">{titleBool ? 'ARCHIVE OF INTENT' : ''}</div>
-        <div className="page-header-title">{title}</div>
+        <div
+          className={`page-header-brand${onBrandClick ? ' is-clickable' : ''}`}
+          role={onBrandClick ? 'button' : undefined}
+          tabIndex={onBrandClick ? 0 : undefined}
+          onClick={(e) => {
+            e.stopPropagation()
+            onBrandClick?.()
+          }}
+          onKeyDown={(e) => {
+            e.stopPropagation()
+            handleKeyActivate(onBrandClick)(e)
+          }}
+        >
+          {titleBool ? 'ARCHIVE OF INTENT' : ''}
+        </div>
+
+        <div
+          className={`page-header-title${onTitleClick ? ' is-clickable' : ''}`}
+          role={onTitleClick ? 'button' : undefined}
+          tabIndex={onTitleClick ? 0 : undefined}
+          onClick={(e) => {
+            e.stopPropagation()
+            onTitleClick?.()
+          }}
+          onKeyDown={(e) => {
+            e.stopPropagation()
+            handleKeyActivate(onTitleClick)(e)
+          }}
+        >
+          {title}
+        </div>
       </header>
 
       <section className="page-body">{body}</section>

@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import {
   SiFastapi,
   SiFramer,
+  SiDocker,
   SiGooglemaps,
   SiMongodb,
   SiPostgresql,
+  SiOpenai,
   SiPytorch,
   SiReact,
   SiRedis,
@@ -27,9 +29,11 @@ type Tech = {
     | 'postgres'
     | 'redis'
     | 'fastapi'
+    | 'docker'
     | 'mongodb'
     | 'googlemaps'
     | 'pytorch'
+    | 'openai'
 }
 
 type SelectedWorkShowcaseProps = {
@@ -49,9 +53,11 @@ const techIconComponents: Record<Tech['icon'], IconType> = {
   postgres: SiPostgresql,
   redis: SiRedis,
   fastapi: SiFastapi,
+  docker: SiDocker,
   mongodb: SiMongodb,
   googlemaps: SiGooglemaps,
   pytorch: SiPytorch,
+  openai: SiOpenai,
 }
 
 const techIconColors: Record<Tech['icon'], string> = {
@@ -61,9 +67,11 @@ const techIconColors: Record<Tech['icon'], string> = {
   postgres: '#336791',
   redis: '#DC382D',
   fastapi: '#009688',
+  docker: '#2496ED',
   mongodb: '#47A248',
   googlemaps: '#4285F4',
   pytorch: '#EE4C2C',
+  openai: '#10A37F',
 }
 
 function isVideoSlide(src: string) {

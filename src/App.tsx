@@ -1,46 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import logo from './assets/logo.png'
+import thePulse from './assets/thePulse.png'
 import { AmbientGlowBackground } from './components/AmbientGlowBackground'
 import { Page } from './components/Page'
 import { SelectedWorkShowcase } from './components/SelectedWorkShowcase'
 
 const selectedWorks = [
   {
-    title: 'Meridian',
-    subtitle: 'Navigation system for long-running creative programs',
+    title: 'ThePulse',
+    subtitle: 'Clinical support platform for patient records and care workflows',
     year: '2025',
+    link: 'https://github.com/kalkidan-hub/ThePulse',
     description: [
-      'Meridian maps milestones, dependencies, and decision points into a single editorial path so teams can see the shape of a project before it reaches production.',
-      'The interface emphasizes orientation over density: a calm surface for planning work that changes weekly, with timelines and handoffs that stay legible as scope evolves.',
+      'ThePulse is a clinical support app for managing patient records, care notes, prescriptions, vitals, lab reports, summaries, reminders, and patient-facing chat.',
+      'It is designed for two roles: doctors and clinical staff who enter and review care data, and patients who view their own history, get reminders, and chat with a history-aware assistant.',
+      'Main features include prescription and note entry, lab report intake, patient history review, generated summaries, reminder delivery, and an assistant that stays aware of the patient\'s health history.',
     ],
-    slides: [{ src: '/projects/meridian-1.svg', alt: 'Meridian concept image' }],
+    slides: [{ src: thePulse, alt: 'ThePulse project preview' }],
     techStack: [
-      { name: 'TypeScript', icon: 'typescript' as const },
-      { name: 'React', icon: 'react' as const },
-      { name: 'Motion', icon: 'motion' as const },
+      { name: 'FastAPI', icon: 'fastapi' as const },
       { name: 'PostgreSQL', icon: 'postgres' as const },
-    ],
-  },
-  {
-    title: 'Confluence',
-    subtitle: 'Real-time collaborative design at scale',
-    year: '2024',
-    description: [
-      'A multiplayer design environment built for teams working across time zones. The challenge was keeping the system coherent while many people edited at once.',
-      'Conflict resolution is surfaced visually rather than hidden, making design negotiation traceable and easy to revisit after the session ends.',
-    ],
-    slides: [
-      { src: '/projects/confluence-1.svg', alt: 'Confluence demo image one' },
-      { src: '/projects/confluence-2.svg', alt: 'Confluence demo image two' },
-      { src: '/projects/confluence-3.svg', alt: 'Confluence demo image three' },
-    ],
-    techStack: [
-      { name: 'TypeScript', icon: 'typescript' as const },
-      { name: 'WebSockets', icon: 'motion' as const },
-      { name: 'Operational Transformation', icon: 'motion' as const },
-      { name: 'PostgreSQL', icon: 'postgres' as const },
-      { name: 'Redis', icon: 'redis' as const },
+      { name: 'Docker', icon: 'docker' as const },
+      { name: 'LLM', icon: 'openai' as const },
     ],
   },
   {
@@ -57,37 +39,6 @@ const selectedWorks = [
       { name: 'MongoDB', icon: 'mongodb' as const },
       { name: 'Google Maps API', icon: 'googlemaps' as const },
       { name: 'PyTorch', icon: 'pytorch' as const },
-    ],
-  },
-  {
-    title: 'The Legibility of Latency',
-    subtitle: 'A system feedback study for asynchronous interfaces',
-    year: '2023',
-    description: [
-      'This study explores how small delays reshape trust in an interface, and how micro-feedback can keep a user oriented while the system catches up.',
-      'The result is a set of feedback states that communicate progress, uncertainty, and completion with the minimum possible visual noise.',
-    ],
-    slides: [{ src: '/projects/latency-1.svg', alt: 'Latency study concept image' }],
-    techStack: [
-      { name: 'TypeScript', icon: 'typescript' as const },
-      { name: 'React', icon: 'react' as const },
-      { name: 'Motion', icon: 'motion' as const },
-    ],
-  },
-  {
-    title: 'Design Commons',
-    subtitle: 'Public tooling for shared design systems',
-    year: '2023',
-    description: [
-      'Design Commons packages shared components, tokens, and usage notes into a public reference that contributors can adopt without needing a private design ops layer.',
-      'The emphasis is on clarity and reuse: one source of truth for teams that want their interface language to stay consistent as projects multiply.',
-    ],
-    slides: [{ src: '/projects/commons-1.svg', alt: 'Design Commons concept image' }],
-    techStack: [
-      { name: 'React', icon: 'react' as const },
-      { name: 'TypeScript', icon: 'typescript' as const },
-      { name: 'PostgreSQL', icon: 'postgres' as const },
-      { name: 'Redis', icon: 'redis' as const },
     ],
   },
 ] as const
@@ -278,14 +229,14 @@ function App() {
                                 {selectedWorks.map((work, index) => (
                                   <li key={work.title} className="toc-item">
                                     <button
-                                      className={work.title === 'TransitTrack' ? 'toc-link toc-link--with-media' : 'toc-link'}
+                                      className={work.title === 'TransitTrack' || work.title === 'ThePulse' ? 'toc-link toc-link--with-media' : 'toc-link'}
                                       onClick={() => setPageIndex(index + 3)}
                                       aria-label={`Open ${work.title}`}
                                     >
-                                      {work.title === 'TransitTrack' && (
+                                      {(work.title === 'TransitTrack' || work.title === 'ThePulse') && (
                                         <img
-                                          src="/projects/transittrack_logo.png"
-                                          alt="TransitTrack logo"
+                                          src={work.title === 'ThePulse' ? thePulse : '/projects/transittrack_logo.png'}
+                                          alt={work.title === 'ThePulse' ? 'ThePulse preview image' : 'TransitTrack logo'}
                                           className="toc-thumb"
                                         />
                                       )}
@@ -308,7 +259,7 @@ function App() {
                             aria-label="Open Letters of Recommendation"
                           >
                             <span className="title">Letters of Recommendation</span>
-                            <span className="page">6–7</span>
+                            <span className="page">5–6</span>
                           </button>
                         </li>
                       </ol>
